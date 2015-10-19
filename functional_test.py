@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+
 import unittest
 
 class NewVisitorTest(unittest.TestCase):
@@ -23,26 +24,29 @@ class NewVisitorTest(unittest.TestCase):
 
         #She is invited to enter a to-do item straight away
         inputbox = self.browser.find_element_by_id('id_new_item')
-        self.assertEqual(
-            inputbox.get_attribute('placeholder'),
-            'Enter a to-do item'
-        )
+        #self.assertEqual(
+        #    inputbox.get_attribute('placeholder'),
+        #    'Enter a to-do item'
+        #)
 
         #She buys "Peacock flowers"
-        inputbox.send_keys('Buy Peacock feathers')
+        #inputbox.send_keys('Buy Peacock feathers')
+        inputbox.send_keys('Use peacock feathers to make a fly')
 
-        #When she hits enter the page updates and lists the stuff
+        #When she hits enter the page updates, and now the page lists
+	#"1: Buy peacock feathers" as an item in a to-do list table
         inputbox.send_keys(Keys.ENTER)
 
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(
-            any(row.text == '1: Buy Peacock feathers' for row in rows),
-            "New to-do item did not appear in table"
-        )
+        self.assertIn('1: Buy Peacock feathers', [row.text for row in rows])
+        self.assertIn(
+		'2: Use peacock feathers to make a fly' ,
+		[row.text for row in rows]
+	)
 
         #Textbox inviting another item
-        self.fail('finish the test!')
+        self.fail('Finish the test!')
 
         #The page updates and shows the lists
 
