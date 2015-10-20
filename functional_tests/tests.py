@@ -26,11 +26,11 @@ class NewVisitorTest(LiveServerTestCase):
 		self.assertIn('To-Do', self.browser.title)
 		header_text = self.browser.find_element_by_tag_name('h1').text
 		self.assertIn('To-Do', header_text)
-		
+
 		# She is invited to enter a to-do item straight away
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		inputbox.send_keys('Buy peacock feathers')
-		
+
 		# When she hits enter, she is taken to a new URL,
 		# and now the page list "1: Buy peacock feathers" as an item in a
 		# to-do list table
@@ -54,7 +54,7 @@ class NewVisitorTest(LiveServerTestCase):
 
 		## We use a new browser session to meke sure that no information
 		## of Edith's is coming through from cookies etc #
-		self.browser.qui()
+		self.browser.quit()
 		self.browser = webdriver.Firefox()
 
 		# Francis visits the home page. There is no sign of Edith's
@@ -64,7 +64,7 @@ class NewVisitorTest(LiveServerTestCase):
 		self.assertNotIn('Buy peacock feathers', page_text)
 		self.assertNotIn('make a fly', page_text)
 
-		# Francis starts a new listby entering a new item. He 
+		# Francis starts a new listby entering a new item. He
 		# is less interesting than Edith...
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		inputbox.send_keys('Buy milk')
