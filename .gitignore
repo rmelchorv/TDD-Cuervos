@@ -4,4 +4,4 @@ __pycache__
 *.pyc
 *.py~
 *.html~
-lists/static/
+#lists/static/
